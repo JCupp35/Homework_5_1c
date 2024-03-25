@@ -29,8 +29,8 @@ class MainActivity : AppCompatActivity() {
         // get results
 
         if (result.resultCode == Activity.RESULT_OK) {
-            quizViewModel.isCheater =
-                result.data?.getBooleanExtra(EXTRA_ANSWER_SHOWN, false) ?: false
+            val isCheater = result.data?.getBooleanExtra(EXTRA_ANSWER_SHOWN, false) ?: false
+            quizViewModel.setCheaterForCurrentQuestion(isCheater)
         }
 
 
@@ -85,21 +85,12 @@ class MainActivity : AppCompatActivity() {
 private fun checkAnswer(userAnswer: Boolean) {
     // val correctAnswer = questionBank[currentIndex].answer
     val correctAnswer = quizViewModel.currentQuestionAnswer
-
-      /*  val messageResId = if (userAnswer == correctAnswer) {
-            R.string.correct_toast
-    } else {
-        R.string.incorrect_toast
-        }*/
-
-        val messageResId = when {
-            quizViewModel.isCheater -> "Cheating is wrong."
-            userAnswer == correctAnswer -> "Correct!"
-            else -> "Incorrect!"
-        }
-        Toast.makeText(this, messageResId, Toast.LENGTH_SHORT).show()
-
-
+    val messageResId = when {
+        quizViewModel.isCheaterForCurrentQuestion() -> "Cheating is wrong."
+        userAnswer == correctAnswer -> "Correct!"
+        else -> "Incorrect!"
+    }
+    Toast.makeText(this, messageResId, Toast.LENGTH_SHORT).show()
 }
 
     override fun onStart(){
