@@ -30,24 +30,17 @@ class CheatActivity : AppCompatActivity() {
         answerIsTrue = intent.getBooleanExtra(EXTRA_ANSWER_IS_TRUE, false)
 
         binding.showAnswerButton.setOnClickListener{
-            binding.answerTextView.setText(
-                if (answerIsTrue) R.string.true_button else R.string.false_button
-            )
-            cheatViewModel.isCheater = true
+            val answerText = when {
+
+                answerIsTrue -> R.string.true_button
+                else -> R.string.false_button
+            }
+            binding.answerTextView.setText(answerText)
             setAnswerShownResult(true)
         }
     }
 
-        /*if (cheatViewModel.isAnswerShown) {
-            binding.showAnswerButton.setOnClickListener {
-                showAnswer()
-                cheatViewModel.isAnswerShown = true
-                setAnswerShownResult(true)
-            }
-        } else {
-            showAnswer()
-        }
-    }*/
+  
 
     private fun setAnswerShownResult(isAnswerShown: Boolean) {
         val data = Intent().apply {

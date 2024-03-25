@@ -14,7 +14,7 @@ class CheatViewModel(private val savedStateHandle: SavedStateHandle) : ViewModel
     init {
         Log.d(TAG, "ViewModel Instance created")
     }
-    var isCheater: Boolean = false
+
     var isAnswerShown: Boolean
         get() = savedStateHandle.get(IS_ANSWER_SHOWN_KEY) ?: false
         set(value) = savedStateHandle.set(IS_ANSWER_SHOWN_KEY, value)
